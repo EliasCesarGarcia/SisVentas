@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisVentas", "SisVentas\SisVentas.csproj", "{01B1E0DD-06B2-4D8C-B1C0-2BB1389D965C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{AA4A2800-DFC0-4817-B403-9C42D46EC30E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{01B1E0DD-06B2-4D8C-B1C0-2BB1389D965C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01B1E0DD-06B2-4D8C-B1C0-2BB1389D965C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01B1E0DD-06B2-4D8C-B1C0-2BB1389D965C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
