@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisVentas", "SisVentas\SisV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{AA4A2800-DFC0-4817-B403-9C42D46EC30E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaNegocio", "CapaNegocio\CapaNegocio.csproj", "{368A773E-98DA-4BEE-8150-2093879E159D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaPresentacion", "CapaPresentacion\CapaPresentacion.csproj", "{55F5A747-84A2-4376-950C-2651DB0EB264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA4A2800-DFC0-4817-B403-9C42D46EC30E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{368A773E-98DA-4BEE-8150-2093879E159D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{368A773E-98DA-4BEE-8150-2093879E159D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{368A773E-98DA-4BEE-8150-2093879E159D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{368A773E-98DA-4BEE-8150-2093879E159D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F5A747-84A2-4376-950C-2651DB0EB264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F5A747-84A2-4376-950C-2651DB0EB264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F5A747-84A2-4376-950C-2651DB0EB264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F5A747-84A2-4376-950C-2651DB0EB264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
