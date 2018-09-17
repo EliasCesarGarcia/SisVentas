@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 //...categoria.
 namespace CapaDatos
 {
-    class DCategoria
+    public class DCategoria
     {
         //Atributos relacionados con nuestros campos de nuestra tabla categoría.
         private int _Idcategoria;
