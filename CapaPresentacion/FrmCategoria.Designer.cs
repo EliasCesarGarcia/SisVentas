@@ -327,6 +327,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "FrmCategoria";
             this.Text = "Mantenimiento de Categorías";
+            this.Load += new System.EventHandler(this.FrmCategoria_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
