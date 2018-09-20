@@ -76,11 +76,104 @@ namespace CapaPresentacion
             this.txtIdcategoria.ReadOnly = !valor;
         }
 
-        //Minuto 7:25
+        //Habilitar los botones:
+        private void Botones()
+        {
+            //Éste procedimiento va a habilitar o deshabilitar ciertos botonos.
+            //Si IsNuevo está activado, es decir si se va a registrar un artículo...
+            //O está activado IsEditar:
+            if (this.IsNuevo || this.IsEditar)
+            {
+                //LLamamos a nuesto método Habilitar para las cajas de texto:
+                this.Habilitar(true);
+                //Deshabilite el botón:
+                this.btnNuevo.Enabled = false;
+                //Habilitamos el botón guardar:
+                this.btnGuardar.Enabled = true;
+                //Dehabilitamos el botón editar:
+                this.btnEditar.Enabled = false;
+                //Habilitamos el botón cancelar:
+                this.btnCancelar.Enabled = true;
+            }
+            else
+            {
+                //Si no está insertando o editando un registro, deshabilitamos las cajas de texto: false.
+                this.Habilitar(false);
+                //Habilitamos el botón Nuevo, para que pueda registrar el artículo:
+                this.btnNuevo.Enabled = true;
+                //Deshabilitamos el botón guardar, ya que no ingresamos nada, no puede guardar.
+                this.btnGuardar.Enabled = false;
+                //Habilitamos el botón editar:
+                this.btnEditar.Enabled = true;
+                //Habilitamos el botón cancelar:
+                this.btnCancelar.Enabled = false;
+            }
+        }
+
+        //Método para ocultar columnas:
+        private void OcultarColumnas()
+        {
+            //False: para que no esté visible:
+            //Oculto la columna: Eliminar [0]
+            //Oculto la columna: idcategoria [1]
+            this.dataListado.Columns[0].Visible = false;
+            this.dataListado.Columns[1].Visible = false;
+        }
+
+        //Método Mostrar todos los registros de la tabla cateogoría:
+        private void Mostrar()
+        {
+            //LLamo a mi clase NCategoria, donde está mi procedimiento: Mostrar, para que me envíe...
+            //... ciertos valores.
+            this.dataListado.DataSource = NCategoria.Mostrar();
+            this.OcultarColumnas();
+            //lo concatenamos con el total de registros, llamando a su métodos Rows (de filas)...
+            //... y llamamos a su método count, para contar todas las filas.
+            //Como: ataListado.Rows.Count, me devuelve un int y lo que queremos es un string...
+            //... para eso usamos: Convert.ToString, para convertir todo a un string:
+            lblTotal.Text = "Total de Registros: " + Convert.ToString(dataListado.Rows.Count);
+        }
+
+        //Métod BuscarNombre.
+        private void BuscarNombre()
+        {
+            //LLamo a mi clase NCategoria, donde está mi procedimiento: BuscarNombre, para que me envíe...
+            //... ciertos valores.
+            //BuscarNombre, está esperando un parámetro: la caja de texto: txtBuscar
+            //Y obtengo el texto con su propiedad: .Text
+            this.dataListado.DataSource = NCategoria.BuscarNombre(this.txtBuscar.Text);
+            this.OcultarColumnas();
+            //lo concatenamos con el total de registros, llamando a su métodos Rows (de filas)...
+            //... y llamamos a su método count, para contar todas las filas.
+            //Como: ataListado.Rows.Count, me devuelve un int y lo que queremos es un string...
+            //... para eso usamos: Convert.ToString, para convertir todo a un string:
+            lblTotal.Text = "Total de Registros: " + Convert.ToString(dataListado.Rows.Count);
+        }
 
         private void FrmCategoria_Load(object sender, EventArgs e)
         {
+            //Primero, ubicar nuestro formulario:
+            //En la esquina superior:
+            this.Top = 0;
+            //Alineado en la izquierda:
+            this.Left = 0;
 
+            this.Mostrar();
+            //Le digo que las cajas de texto no estén habilitadas o sean de sólo lectura:
+            this.Habilitar(false);
+            this.Botones();
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            //LLamo a mi método BuscarNombre:
+            this.BuscarNombre();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            //Cada vez que el usuario escriba una letra o borre, se valla actualizando el datalistado:
+            this.BuscarNombre();
         }
     }
 }

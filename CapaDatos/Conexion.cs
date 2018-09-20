@@ -12,6 +12,6 @@ namespace CapaDatos
         //Quién va a ser el servidor de datos: Data Source.
         //Nuestro servidor de datos: GARCIAELIAS-PC\SQLEXPRESS
         //Nombre de nuestra base de datos: Initial Catalog = dvventas
-        public static string Cn = "Data Source = GARCIAELIAS-PC; Initial Catalog = dvventas; Integrated Security = true";
+        public static string Cn = "Data Source = localhost\\sqlexpress; Initial Catalog = dvventas; Integrated Security = true";
     }
 }
