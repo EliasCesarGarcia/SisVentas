@@ -18,8 +18,6 @@ namespace CapaPresentacion
         private bool IsNuevo = false;
         private bool IsEditar = false;
 
-
-
         public FrmCategoria()
         {
             InitializeComponent();
@@ -174,6 +172,99 @@ namespace CapaPresentacion
         {
             //Cada vez que el usuario escriba una letra o borre, se valla actualizando el datalistado:
             this.BuscarNombre();
+        }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            //Cuando se haga clic en este botón (IsNuevo), se va registrar un artículo.
+            //La variable IsNuevo, se va a convertir en verdadera:
+            this.IsNuevo = true;
+            //No voy a editar, sino a registrar un artículo, por eso será falsa:
+            this.IsEditar = false;
+            this.Botones();
+            this.Limpiar();
+            //Habilitar las cajas de texto con true:
+            this.Habilitar(true);
+            //Enviar el enfoque a ésta caja de texto:
+            this.txtNombre.Focus();
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Declaro una variable para evaluar si se insertó o modificó:
+                string rpta = "";
+                //Voy a validar los datos. En éste caso, el campo Nombre no puede estar vacío:
+                //string.Empty = quiere decir que está vacía:
+                if(this.txtNombre.Text == string.Empty)
+                {
+                    MensajeError("Falta ingresar algunos datos, serán remarcados");
+                    //Que el icono de error aparezca al costado de la caja de texto: txtNombre.
+                    erroricono.SetError(txtNombre,"Ingrese un Nombre");
+                }
+                else
+                {
+                    //El usuario quiere realizar un registro:
+                    if (this.IsNuevo)
+                    {
+                        //Se envían 2 parámatros: txtNombre, para enviar el nombre. Y descripción.
+                        //Trim: para borrar los espacios en blanco.
+                        //ToUpper: para convertir a mayúsculas.
+                        rpta = NCategoria.Insertar(this.txtNombre.Text.Trim().ToUpper(),
+                                                   this.txtDescripcion.Text.Trim());
+                    }
+                    else
+                    {
+                        //Se envían 3 parámatros.
+                        //Trim: para borrar los espacios en blanco.
+                        //ToUpper: para convertir a mayúsculas.
+                        rpta = NCategoria.Editar(Convert.ToInt32(this.txtIdcategoria.Text), 
+                                                 this.txtNombre.Text.Trim().ToUpper(), 
+                                                 this.txtDescripcion.Text.Trim());
+                    }
+
+                    //Esto es para la respuesta (rpta) de DCategoria, en el método insertar:
+                    //Equals: para comparar una cadena.
+                    if (rpta.Equals("OK")) //OK, es si se insertó o modificó.
+                    {
+                        //Recibo un OK del insertr, porque IsNuevo está en true en el if:
+                        if (this.IsNuevo)
+                        {
+                            this.MensajeOk("se insertó de forma correcta el registro");
+                        }
+                        //Si no es Insertar(IsNuevo) es un editar:
+                        else
+                        {
+                            this.MensajeOk("se actualizó de forma correcta el registro");
+                        }
+                    }
+                    //Si No recibo un OK:
+                    else
+                    {
+                        //rpta, es el que recibe los mensajes.
+                        this.MensajeError(rpta);
+                    }
+
+                    //Lo dejó en false, porque ya ingresé el registro:
+                    this.IsNuevo = false;
+                    this.IsEditar = false;
+                    this.Botones();
+                    this.Limpiar();
+                    //Para Mostrar actualizado nuestro datalistado:
+                    this.Mostrar();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            //11.26
         }
     }
 }

@@ -235,6 +235,7 @@
             this.btnEditar.TabIndex = 8;
             this.btnEditar.Text = "E&ditar";
             this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnGuardar
             // 
@@ -244,6 +245,7 @@
             this.btnGuardar.TabIndex = 7;
             this.btnGuardar.Text = "&Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnNuevo
             // 
@@ -253,6 +255,7 @@
             this.btnNuevo.TabIndex = 6;
             this.btnNuevo.Text = "&Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // txtDescripcion
             // 
