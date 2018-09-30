@@ -262,9 +262,150 @@ namespace CapaPresentacion
             }
         }
 
+        private void dataListado_DoubleClick(object sender, EventArgs e)
+        {
+            //Aquí va el código que me va a permitir devolver todos los valores de cada una 
+            //de las columnas de mi datalistado a cada una de las cajas de texto:
+
+            //Convierto, porque la caja de texto está esperando un string: Convert.ToString:
+            //Convierto lo que tiene mi datalistado utilizando el método: CurrentRow, lo que
+            //tiene la celda actual: cells. Entre corchetes le indico el nombre de la columna:
+            //Finalmente le envío el valor que obtengo de esto: value:
+            this.txtIdcategoria.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idcategoria"].Value);
+            this.txtNombre.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["nombre"].Value);
+            this.txtDescripcion.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["descripcion"].Value);
+
+
+            this.tabControl1.SelectedIndex = 1;
+        }
+
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            //11.26
+            //Primero determino que la caja de texto no esté vacía:
+            //Equals : para comparar un texto:
+            if(!this.txtIdcategoria.Text.Equals(""))
+            {
+                //Si no está vacía activamos el botón Editar:
+                this.IsEditar = true;
+                //LLamamos a nuestro método botones:
+                this.Botones();
+                //Habilitamos todos los controles:
+                this.Habilitar(true);
+            }
+            //Si la caja de texto está vacía:
+            else
+            {
+                this.MensajeError("Debe seleccionar primero el registro a Modificar");
+            }
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.IsNuevo = false;
+            this.IsEditar = false;
+            this.Botones();
+            this.Limpiar();
+            //False: para deshabilitar todas las cajas de texto y dejarlas en sólo lectura:
+            this.Habilitar(false);
+        }
+
+        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
+        {
+            //Checked: está marcado:
+            if(chkEliminar.Checked)
+            {
+                //La columna[0] va a ser visible: true:
+                this.dataListado.Columns[0].Visible = true;
+            }
+            else
+            {
+                //La columna[0] no va a ser visible: false:
+                this.dataListado.Columns[0].Visible = false;
+            }
+        }
+
+        private void dataListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Si el indice de la columna si igual a dataLIstado en su columna Eliminar, los 
+            //índices son iguales:
+            if (e.ColumnIndex==dataListado.Columns["Eliminar"].Index)
+            {
+                //Declaro una variable: ChkEliminar que es del tipo DataGridViewCheckBoxCell
+                //para determinar cuál es el Chexbox selecciondado.
+                //Datalistado.Rows: para ver la fila. En la celda (Cells) en este caso: Eliminar.
+                //dataListado.Rows[e.RowIndex].Cells["Eliminar"] TODO este tipo de dato lo convierto...
+                //... a este tipo de dato: (DataGridViewCheckBoxCell)
+                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataListado.Rows[e.RowIndex].Cells["Eliminar"];
+                //Negamos primero:!
+                //Convertimos a un valor ToBoolean todo lo que estè en ChkEliminar.
+                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Le preguntamos al usuario si está seguro o no de eliminar un registro
+                //Para eso usaremos una variable: opcion
+                DialogResult Opcion;
+                //Título: Sistema de Ventas.
+                //Botones que voy a mostrar: OK, Cancel.
+                //Icono: Questions, para mostrar una pregunta.
+                Opcion = MessageBox.Show("Realmente desea eliminar los registros", "Sistemas de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                //Si el usuario tocó OK:
+                if (Opcion == DialogResult.OK)
+                {
+                    //Declaro 2 variable:
+                    //Variable Codigo: para enviar la llave primaria de la categoria que quiero eliminar:
+                    string Codigo;
+                    //Otra variable para recibir la respuesta si eliminó o no eliminó:
+                    //La voy a inicializar en blanco:
+                    string Rpta = "";
+                    
+                    //Un bucle para que me verifique si están marcados los registros en mi checkbox
+                    //Si están marcados, pasará a mi método eliminar de mi CapaNegocio...
+                    //Y la CapaNegocio pasará al método eliminar de mi CapaDatos...
+                    //Y mi CapaDatos lo pasará al procedimiento almacenado Eliminar de la DB.
+
+                    //Rows: todas las filas
+                    foreach(DataGridViewRow row in dataListado.Rows)
+                    {
+                        //El bucle está revisando fila por fila: row.Cells[0].Value
+                        //Si la columna [0], que es el checkbox es true, por eso se convierte...
+                        //... en Boolean
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            //Eliminar esa fila
+                            //Columna [1] que es de la llave primaria:
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            //LLamo a mi clase NCategoria, y a su método Elimnar.
+                            //Le envío mi variable Codigo pero como ésta variable es un string...
+                            //... y el métod Elimninar está esperando un int lo convierto.
+                            Rpta = NCategoria.Eliminar(Convert.ToInt32(Codigo));
+
+                            if(Rpta.Equals("OK"))
+                            {
+                                //Le envio el mensaje:
+                                this.MensajeOk("Se eliminó correctamente el registro");
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+
+                    //Para mostrar mi datalistado totalmente actualizado:
+                    this.Mostrar();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
     }
 }
