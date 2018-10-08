@@ -72,7 +72,7 @@ namespace CapaDatos
             try
             {
                 //Código:
-                //Primero: estable la cadena de conexión. Cn (la creamos en la clase Conexion)
+                //Primero: establezco la cadena de conexión. Cn (la creamos en la clase Conexion)
                 SqlCon.ConnectionString = Conexion.Cn;
                 //Como está cerrada, la abrimos:
                 SqlCon.Open();
