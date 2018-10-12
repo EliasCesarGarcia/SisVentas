@@ -99,7 +99,7 @@ namespace CapaDatos
                 //Le indico que es un procedimiento almacenado.
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                //Le indicamos uno a uno los parámetros que va a recibir. Son 8:
+                //Le indicamos uno a uno los parámetros que va a recibir. Son 7:
                 SqlParameter ParIdarticulo = new SqlParameter();
                 //Cuál va a ser su nombre en la base de datos de éste parámetro?:
                 //Qué variable me va a afectar?: @idarticulo:
@@ -149,6 +149,18 @@ namespace CapaDatos
                 ParImagen.Value = Articulo.Imagen;
                 SqlCmd.Parameters.Add(ParImagen);
 
+                SqlParameter ParIdcategoria = new SqlParameter();
+                ParIdcategoria.ParameterName = "@idcategoria";
+                ParIdcategoria.SqlDbType = SqlDbType.VarChar;
+                ParIdcategoria.Value = Articulo.Idcategoria;
+                SqlCmd.Parameters.Add(ParIdcategoria);
+
+                SqlParameter ParIdpresentacion = new SqlParameter();
+                ParIdpresentacion.ParameterName = "@idpresentacion";
+                ParIdpresentacion.SqlDbType = SqlDbType.VarChar;
+                ParIdpresentacion.Value = Articulo.Idpresentacion;
+                SqlCmd.Parameters.Add(ParIdpresentacion);
+
                 //Ejecutamos nuestro comando:
                 //Si ejecuta todo y devuelve un valor verdadero: "OK",
                 //sino: "NO se ingresó el registro".
@@ -174,7 +186,7 @@ namespace CapaDatos
         }
 
         //Métodos para: Editar
-        public string Editar(DPresentacion Presentacion)
+        public string Editar(DArticulo Articulo)
         {
             //Función que devuelve un string
             //rpta de respuesta
@@ -197,45 +209,70 @@ namespace CapaDatos
                 //Le decimos a SqlCmd que se conecte:
                 SqlCmd.Connection = SqlCon;
                 //Indico el nombre de objeto que voy a hacer referencia a nuestra base de datos:
-                SqlCmd.CommandText = "speditar_presentacion";
+                SqlCmd.CommandText = "speditar_articulo";
                 //Le indico que es un procedimiento almacenado.
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                //Le indicamos uno a uno los parámetros que va a recibir. Son 3:
-                SqlParameter ParIdpresentacion = new SqlParameter();
+                //Le indicamos uno a uno los parámetros que va a recibir. Son 7:
+                SqlParameter ParIdarticulo = new SqlParameter();
                 //Cuál va a ser su nombre en la base de datos de éste parámetro?:
-                ParIdpresentacion.ParameterName = "@idpresentacion";
+                ParIdarticulo.ParameterName = "@idarticulo";
                 //Tipo de dato:
-                ParIdpresentacion.SqlDbType = SqlDbType.Int;
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
                 //Valor de entrada:
-                ParIdpresentacion.Value = Presentacion.Idpresentacion;
-                //Agregamos éste parámetro (ParIdpresentacion) a nuestro comando SqlCmd, que va a ejecutar en nuestra
+                ParIdarticulo.Value = Articulo.Idarticulo;
+                //Agregamos éste parámetro (ParIdarticulo) a nuestro comando SqlCmd, que va a ejecutar en nuestra
                 //base de datos:
-                SqlCmd.Parameters.Add(ParIdpresentacion);
+                SqlCmd.Parameters.Add(ParIdarticulo);
 
-                //Le pondemos un nombre a nuestro parámetro: ParNombre
+                //Le pondemos un nombre a nuestro parámetro: ParCodigo
                 //Hacemos la instancia = new
-                SqlParameter ParNombre = new SqlParameter();
+                SqlParameter ParCodigo = new SqlParameter();
                 //Hacemos la correspondencia a éste parámetro con la variable de nuestro proceso
                 //almacenado en sqlsever
-                ParNombre.ParameterName = "@nombre";
+                ParCodigo.ParameterName = "@codigo";
                 //Establecer el tipo de dato:
-                ParNombre.SqlDbType = SqlDbType.VarChar;
+                ParCodigo.SqlDbType = SqlDbType.VarChar;
                 //Establecer el tamaño del texto:
-                ParNombre.Size = 50;
-                //Le enviamos un valor, por eso .value. El objeto (Presentacion), enviamos todas
-                //las variables de la clase DCategoria, que están declaradas arriba.
+                ParCodigo.Size = 50;
+                //Le enviamos un valor, por eso .value. El objeto (Articulo), enviamos todas
+                //las variables de la clase DArticulo, que están declaradas arriba.
                 //En éste caso llamamos al método get para obtener el nombre que tiene ese objeto.
-                ParNombre.Value = Presentacion.Nombre;
+                ParCodigo.Value = Articulo.Codigo;
                 //Agregamos.
+                SqlCmd.Parameters.Add(ParCodigo);
+
+                SqlParameter ParNombre = new SqlParameter();
+                ParNombre.ParameterName = "@nombre";
+                ParNombre.SqlDbType = SqlDbType.VarChar;
+                ParNombre.Size = 256;
+                ParNombre.Value = Articulo.Nombre;
                 SqlCmd.Parameters.Add(ParNombre);
 
                 SqlParameter ParDescripcion = new SqlParameter();
                 ParDescripcion.ParameterName = "@descripcion";
                 ParDescripcion.SqlDbType = SqlDbType.VarChar;
-                ParDescripcion.Size = 256;
-                ParDescripcion.Value = Presentacion.Descripcion;
+                ParDescripcion.Size = 1024;
+                ParDescripcion.Value = Articulo.Descripcion;
                 SqlCmd.Parameters.Add(ParDescripcion);
+
+                SqlParameter ParImagen = new SqlParameter();
+                ParImagen.ParameterName = "@imagen";
+                ParImagen.SqlDbType = SqlDbType.Image;
+                ParImagen.Value = Articulo.Imagen;
+                SqlCmd.Parameters.Add(ParImagen);
+
+                SqlParameter ParIdcategoria = new SqlParameter();
+                ParIdcategoria.ParameterName = "@idcategoria";
+                ParIdcategoria.SqlDbType = SqlDbType.VarChar;
+                ParIdcategoria.Value = Articulo.Idcategoria;
+                SqlCmd.Parameters.Add(ParIdcategoria);
+
+                SqlParameter ParIdpresentacion = new SqlParameter();
+                ParIdpresentacion.ParameterName = "@idpresentacion";
+                ParIdpresentacion.SqlDbType = SqlDbType.VarChar;
+                ParIdpresentacion.Value = Articulo.Idpresentacion;
+                SqlCmd.Parameters.Add(ParIdpresentacion);
 
                 //Ejecutamos nuestro comando:
                 //Si ejecuta todo y devuelve un valor verdadero: "OK",
@@ -262,7 +299,7 @@ namespace CapaDatos
         }
 
         //Métodos para: Eliminar
-        public string Eliminar(DPresentacion Presentacion)
+        public string Eliminar(DArticulo Articulo)
         {
             //Función que devuelve un string
             //rpta de respuesta
@@ -285,21 +322,21 @@ namespace CapaDatos
                 //Le decimos a SqlCmd que se conecte:
                 SqlCmd.Connection = SqlCon;
                 //Indico el nombre de objeto que voy a hacer referencia a nuestra base de datos:
-                SqlCmd.CommandText = "speliminar_presentacion";
+                SqlCmd.CommandText = "speliminar_articulo";
                 //Le indico que es un procedimiento almacenado.
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                //Le indicamos uno a uno los parámetros que va a recibir. Son 3:
-                SqlParameter ParIdpresentacion = new SqlParameter();
+                //Le indicamos uno a uno los parámetros que va a recibir. Son 1:
+                SqlParameter ParIdarticulo = new SqlParameter();
                 //Cuál va a ser su nombre en la base de datos de éste parámetro?:
-                ParIdpresentacion.ParameterName = "@idpresentacion";
+                ParIdarticulo.ParameterName = "@idarticulo";
                 //Tipo de dato:
-                ParIdpresentacion.SqlDbType = SqlDbType.Int;
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
                 //Valor de entrada:
-                ParIdpresentacion.Value = Presentacion.Idpresentacion;
-                //Agregamos éste parámetro (Idcategoria) a nuestro comando SqlCmd, que va a ejecutar en nuestra
+                ParIdarticulo.Value = Articulo.Idarticulo;
+                //Agregamos éste parámetro (Idarticulo) a nuestro comando SqlCmd, que va a ejecutar en nuestra
                 //base de datos:
-                SqlCmd.Parameters.Add(ParIdpresentacion);
+                SqlCmd.Parameters.Add(ParIdarticulo);
 
                 //Ejecutamos nuestro comando:
                 //Si ejecuta todo y devuelve un valor verdadero: "OK",
@@ -330,7 +367,7 @@ namespace CapaDatos
         public DataTable Mostrar()
         {
             //Hago una instancia a mi clase DataTable = DtResultado:
-            DataTable DtResultado = new DataTable("presentacion");
+            DataTable DtResultado = new DataTable("articulo");
             //Establezco mi cadena de conexión:
             SqlConnection SqlCon = new SqlConnection();
 
@@ -340,7 +377,7 @@ namespace CapaDatos
                 SqlCommand SqlCmd = new SqlCommand();
                 //Le indico al comando qué cadena de conexión va a utilizar:
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spmostrar_presentacion";
+                SqlCmd.CommandText = "spmostrar_articulo";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
                 //Declaro un sql DataAdapter para ejecutar el comando y llenar el DataTable:
@@ -361,10 +398,10 @@ namespace CapaDatos
         }
 
         //Métodos para: BuscarNombre
-        public DataTable BuscarNombre(DPresentacion Presentacion)
+        public DataTable BuscarNombre(DArticulo Articulo)
         {
             //Hago una instancia a mi clase DataTable = DtResultado:
-            DataTable DtResultado = new DataTable("presentacion");
+            DataTable DtResultado = new DataTable("articulo");
             //Establezco mi cadena de conexión:
             SqlConnection SqlCon = new SqlConnection();
 
@@ -374,14 +411,14 @@ namespace CapaDatos
                 SqlCommand SqlCmd = new SqlCommand();
                 //Le indico al comando qué cadena de conexión va a utilizar:
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spbuscar_presentacion_nombre";
+                SqlCmd.CommandText = "spbuscar_articulo_nombre";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter ParTextoBuscar = new SqlParameter();
                 ParTextoBuscar.ParameterName = "@textobuscar";
                 ParTextoBuscar.SqlDbType = SqlDbType.VarChar;
                 ParTextoBuscar.Size = 50;
-                ParTextoBuscar.Value = Presentacion.TextoBuscar;
+                ParTextoBuscar.Value = Articulo.TextoBuscar;
                 SqlCmd.Parameters.Add(ParTextoBuscar);
 
                 //Declaro un sql DataAdapter para ejecutar el comando y llenar el DataTable:

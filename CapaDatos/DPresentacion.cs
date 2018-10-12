@@ -258,7 +258,7 @@ namespace CapaDatos
                 //Le indico que es un procedimiento almacenado.
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                //Le indicamos uno a uno los parámetros que va a recibir. Son 3:
+                //Le indicamos uno a uno los parámetros que va a recibir. Son 1:
                 SqlParameter ParIdpresentacion = new SqlParameter();
                 //Cuál va a ser su nombre en la base de datos de éste parámetro?:
                 ParIdpresentacion.ParameterName = "@idpresentacion";
