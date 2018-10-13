@@ -18,7 +18,8 @@ namespace SisVentas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPresentacion());
+            //Llamo a la instancia de frmArticulo
+            Application.Run(frmArticulo.GetInstancia());
         }
     }
 }
