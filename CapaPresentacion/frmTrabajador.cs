@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//Agregamos
+//Agrego
 using CapaNegocio;
 
 namespace CapaPresentacion
@@ -23,7 +23,6 @@ namespace CapaPresentacion
         public frmTrabajador()
         {
             InitializeComponent();
-
             //Agregamos los mensaje de ayuda para el usuario final:
             this.ttMensaje.SetToolTip(this.txtNombre, "Ingrese el Nombre del Trabajador");
             this.ttMensaje.SetToolTip(this.txtApellidos, "Ingrese el Apellido del Trabajador");
@@ -51,6 +50,7 @@ namespace CapaPresentacion
             //Mostrará un ícono: MessageBoxIcon.Error.
             MessageBox.Show(mensaje, "Sistema de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
 
         //Método para Limpiar todos los controles del formulario:
         private void Limpiar()
@@ -137,6 +137,7 @@ namespace CapaPresentacion
             this.dataListado.Columns[1].Visible = false;
         }
 
+
         //Método Mostrar todos los registros de la tabla trabajador:
         private void Mostrar()
         {
@@ -151,7 +152,7 @@ namespace CapaPresentacion
             lblTotal.Text = "Total de Registros: " + Convert.ToString(dataListado.Rows.Count);
         }
 
-        //Métod BuscarApellidos
+        //Métodp BuscarApellidos
         private void BuscarApellidos()
         {
             //LLamo a mi clase NTrabajador, donde está mi procedimiento: BuscarApellidos, para que me envíe...
@@ -470,7 +471,6 @@ namespace CapaPresentacion
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-
             //Primero determino que la caja de texto no esté vacía:
             //Equals: para comparar un texto:
             if (!this.txtIdtrabajador.Text.Equals(""))
