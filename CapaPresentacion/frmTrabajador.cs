@@ -8,27 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//Agrego
+//Agregamos
 using CapaNegocio;
 
 namespace CapaPresentacion
 {
-    public partial class frmCliente : Form
+    public partial class frmTrabajador : Form
     {
         //Variable para registrar un nuevo cliente:
         private bool IsNuevo = false;
         //Variable para modificar un cliente:
         private bool IsEditar = false;
 
-        public frmCliente()
+        public frmTrabajador()
         {
             InitializeComponent();
 
             //Agregamos los mensaje de ayuda para el usuario final:
-            this.ttMensaje.SetToolTip(this.txtNombre, "Ingrese el Nombre del Cliente");
-            this.ttMensaje.SetToolTip(this.txtApellidos, "Ingrese el Apellido del Cliente");
-            this.ttMensaje.SetToolTip(this.txtDireccion, "Ingrese la Dirección del Cliente");
-            this.ttMensaje.SetToolTip(this.txtNum_Documento, "Ingrese el Número de Documento del Cliente");
+            this.ttMensaje.SetToolTip(this.txtNombre, "Ingrese el Nombre del Trabajador");
+            this.ttMensaje.SetToolTip(this.txtApellidos, "Ingrese el Apellido del Trabajador");
+            this.ttMensaje.SetToolTip(this.txtUsuario, "Ingrese Usuario para que el trabajador ingrese al Sistema");
+            this.ttMensaje.SetToolTip(this.txtPassword, "Ingrese el Password del Trabajador");
+            this.ttMensaje.SetToolTip(this.cbAcceso, "Seleccione el Nivel de Acceso del Trabajador");
         }
 
         //Método para Mostrar Mensaje de Confirmación:
@@ -64,7 +65,9 @@ namespace CapaPresentacion
             this.txtDireccion.Text = string.Empty;
             this.txtTelefono.Text = string.Empty;
             this.txtEmail.Text = string.Empty;
-            this.txtIdcliente.Text = string.Empty;
+            this.txtUsuario.Text = string.Empty;
+            this.txtPassword.Text = string.Empty;
+            this.txtIdtrabajador.Text = string.Empty;
         }
 
         //Habilitar o deshabilitar los controles de los formularios:
@@ -79,12 +82,15 @@ namespace CapaPresentacion
             //Si recibimos false, las cajas de texto van a estar deshabilitadas.
             this.txtNombre.ReadOnly = !valor;
             this.txtApellidos.ReadOnly = !valor;
-            this.txtDireccion.ReadOnly = !valor; //"!valor", negamos lo que recibimos. 
-            this.cbTipo_Documento.Enabled = valor;
+            this.txtDireccion.ReadOnly = !valor; //"!valor", negamos lo que recibimos.
+            this.cbSexo.Enabled = valor;
             this.txtNum_Documento.ReadOnly = !valor;
             this.txtTelefono.ReadOnly = !valor;
             this.txtEmail.ReadOnly = !valor;
-            this.txtIdcliente.ReadOnly = !valor;
+            this.cbAcceso.Enabled = valor;
+            this.txtUsuario.ReadOnly = !valor;
+            this.txtPassword.ReadOnly = !valor;
+            this.txtIdtrabajador.ReadOnly = !valor;
         }
 
         //Habilitar los botones:
@@ -131,12 +137,12 @@ namespace CapaPresentacion
             this.dataListado.Columns[1].Visible = false;
         }
 
-        //Método Mostrar todos los registros de la tabla clientes:
+        //Método Mostrar todos los registros de la tabla trabajador:
         private void Mostrar()
         {
-            //LLamo a mi clase NCliente, donde está mi procedimiento: Mostrar, para que me envíe...
+            //LLamo a mi clase NTrabajador, donde está mi procedimiento: Mostrar, para que me envíe...
             //... ciertos valores.
-            this.dataListado.DataSource = NCliente.Mostrar();
+            this.dataListado.DataSource = NTrabajador.Mostrar();
             this.OcultarColumnas();
             //lo concatenamos con el total de registros, llamando a su métodos Rows (de filas)...
             //... y llamamos a su método count, para contar todas las filas.
@@ -148,11 +154,11 @@ namespace CapaPresentacion
         //Métod BuscarApellidos
         private void BuscarApellidos()
         {
-            //LLamo a mi clase NCliente, donde está mi procedimiento: BuscarApellidos, para que me envíe...
+            //LLamo a mi clase NTrabajador, donde está mi procedimiento: BuscarApellidos, para que me envíe...
             //... ciertos valores.
             //BuscarApellidos, está esperando un parámetro: la caja de texto: txtBuscar
             //Y obtengo el texto con su propiedad: .Text
-            this.dataListado.DataSource = NCliente.BuscarApellidos(this.txtBuscar.Text);
+            this.dataListado.DataSource = NTrabajador.BuscarApellidos(this.txtBuscar.Text);
             this.OcultarColumnas();
             //lo concatenamos con el total de registros, llamando a su métodos Rows (de filas)...
             //... y llamamos a su método count, para contar todas las filas.
@@ -164,11 +170,11 @@ namespace CapaPresentacion
         //Métod BuscarNum_Documento
         private void BuscarNum_Documento()
         {
-            //LLamo a mi clase NCliente, donde está mi procedimiento: BuscarNum_Documento, para que me envíe...
+            //LLamo a mi clase NTrabajador, donde está mi procedimiento: BuscarNum_Documento, para que me envíe...
             //... ciertos valores.
             //BuscarNum_Documento, está esperando un parámetro: la caja de texto: txtBuscar
             //Y obtengo el texto con su propiedad: .Text
-            this.dataListado.DataSource = NCliente.BuscarNum_Documento(this.txtBuscar.Text);
+            this.dataListado.DataSource = NTrabajador.BuscarNum_Documento(this.txtBuscar.Text);
             this.OcultarColumnas();
             //lo concatenamos con el total de registros, llamando a su métodos Rows (de filas)...
             //... y llamamos a su método count, para contar todas las filas.
@@ -177,7 +183,7 @@ namespace CapaPresentacion
             lblTotal.Text = "Total de Registros: " + Convert.ToString(dataListado.Rows.Count);
         }
 
-        private void frmCliente_Load(object sender, EventArgs e)
+        private void frmTrabajador_Load(object sender, EventArgs e)
         {
             //Aparezca en la parte superior:
             this.Top = 0;
@@ -193,19 +199,19 @@ namespace CapaPresentacion
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            //Valido el combobox "cbBuscar", para evaluar la búsqueda por Razón Social o Documento...
+            // Valido el combobox "cbBuscar", para evaluar la búsqueda por Apellido o Documento...
             //... ambos búsquedas tienen sus procesos almacenados.
             //Lo que tento en mi propiedad ".Text"...
             //... y lo comparo con el método Equals:
-            if (cbBuscar.Text.Equals("Apellidos"))
-            {
-                //Voy a llamar a mi método "BuscarApellidos"
-                this.BuscarApellidos();
-            }
-            else if (cbBuscar.Text.Equals("Documento"))
+            if (cbBuscar.Text.Equals("Documento"))
             {
                 //Voy a llamar a mi método "BuscarNum_Documento"
                 this.BuscarNum_Documento();
+            }
+            else if (cbBuscar.Text.Equals("Apellidos"))
+            {
+                //Voy a llamar a mi método "BuscarApellidos"
+                this.BuscarApellidos();
             }
         }
 
@@ -250,7 +256,7 @@ namespace CapaPresentacion
                             //LLamo a mi clase NProveedor, y a su método Elimnar.
                             //Le envío mi variable Codigo pero como ésta variable es un string...
                             //... y el métod Elimninar está esperando un int lo convierto.
-                            Rpta = NCliente.Eliminar(Convert.ToInt32(Codigo));
+                            Rpta = NTrabajador.Eliminar(Convert.ToInt32(Codigo));
 
                             if (Rpta.Equals("OK"))
                             {
@@ -317,16 +323,18 @@ namespace CapaPresentacion
             //tiene la celda actual: cells. Entre corchetes le indico el nombre de la columna:
             //Finalmente le envío el valor que obtengo de esto: value:
             //Nombre del campo en nuestra base de datos:
-            this.txtIdcliente.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idcliente"].Value);
+            this.txtIdtrabajador.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idtrabajador"].Value);
             this.txtNombre.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["nombre"].Value);
             this.txtApellidos.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["apellidos"].Value);
             this.cbSexo.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["sexo"].Value);
             this.dtFechaNac.Value = Convert.ToDateTime(this.dataListado.CurrentRow.Cells["fecha_nacimiento"].Value);
-            this.cbTipo_Documento.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["tipo_documento"].Value);
             this.txtNum_Documento.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["num_documento"].Value);
             this.txtDireccion.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["direccion"].Value);
             this.txtTelefono.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["telefono"].Value);
             this.txtEmail.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["email"].Value);
+            this.cbAcceso.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["acceso"].Value);
+            this.txtUsuario.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["usuario"].Value);
+            this.txtPassword.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["password"].Value);
 
             this.tabControl1.SelectedIndex = 1;
         }
@@ -346,6 +354,18 @@ namespace CapaPresentacion
             this.txtNombre.Focus();
         }
 
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            //"False" porque estamos cancelando todo
+            this.IsNuevo = false;
+            this.IsEditar = false;
+            this.Botones();
+            this.Habilitar(false);
+            this.Limpiar();
+            //Dejamos en blanco nuestra caja de texto "Idcliente"
+            this.txtIdtrabajador.Text = string.Empty;
+        }
+
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -357,7 +377,9 @@ namespace CapaPresentacion
                 if (this.txtNombre.Text == string.Empty ||
                     this.txtApellidos.Text == string.Empty ||
                     this.txtNum_Documento.Text == string.Empty ||
-                    this.txtDireccion.Text == string.Empty)
+                    this.txtDireccion.Text == string.Empty ||
+                    this.txtUsuario.Text == string.Empty ||
+                    this.txtPassword.Text == string.Empty)
                 {
                     MensajeError("Falta ingresar algunos datos, serán remarcados");
                     //Que el icono de error aparezca al costado de la caja de texto: txtNombre.
@@ -365,6 +387,8 @@ namespace CapaPresentacion
                     errorIcono.SetError(txtApellidos, "Ingrese un Valor");
                     errorIcono.SetError(txtNum_Documento, "Ingrese un Valor");
                     errorIcono.SetError(txtDireccion, "Ingrese un Valor");
+                    errorIcono.SetError(txtUsuario, "Ingrese un Valor");
+                    errorIcono.SetError(txtPassword, "Ingrese un Valor");
                 }
                 else
                 {
@@ -374,32 +398,36 @@ namespace CapaPresentacion
                         //Se envían varios parámatros.
                         //Trim: para borrar los espacios en blanco.
                         //ToUpper: para convertir a mayúsculas.
-                        rpta = NCliente.Insertar(this.txtNombre.Text.Trim().ToUpper(),
-                                                 this.txtApellidos.Text.Trim().ToUpper(),
-                                                 this.cbSexo.Text,
-                                                 dtFechaNac.Value,
-                                                 cbTipo_Documento.Text,
-                                                 txtNum_Documento.Text,
-                                                 txtDireccion.Text,
-                                                 txtTelefono.Text,
-                                                 txtEmail.Text);
-                                                 
+                        rpta = NTrabajador.Insertar(this.txtNombre.Text.Trim().ToUpper(),
+                                                    this.txtApellidos.Text.Trim().ToUpper(),
+                                                    this.cbSexo.Text,
+                                                    dtFechaNac.Value,
+                                                    txtNum_Documento.Text,
+                                                    txtDireccion.Text,
+                                                    txtTelefono.Text,
+                                                    txtEmail.Text,
+                                                    this.cbAcceso.Text,
+                                                    this.txtUsuario.Text,
+                                                    this.txtPassword.Text);
+
                     }
                     else
                     {
                         //Se envían varios parámatros.
                         //Trim: para borrar los espacios en blanco.
                         //ToUpper: para convertir a mayúsculas.
-                        rpta = NCliente.Editar(Convert.ToInt32(this.txtIdcliente.Text),
+                        rpta = NTrabajador.Editar(Convert.ToInt32(this.txtIdtrabajador.Text),
                                                  this.txtNombre.Text.Trim().ToUpper(),
                                                  this.txtApellidos.Text.Trim().ToUpper(),
                                                  this.cbSexo.Text,
                                                  dtFechaNac.Value,
-                                                 cbTipo_Documento.Text,
                                                  txtNum_Documento.Text,
                                                  txtDireccion.Text,
                                                  txtTelefono.Text,
-                                                 txtEmail.Text);
+                                                 txtEmail.Text,
+                                                 cbAcceso.Text,
+                                                 this.txtUsuario.Text,
+                                                 this.txtPassword.Text);
                     }
 
                     //Esto es para la respuesta (rpta) de DProveedor, en el método insertar:
@@ -442,9 +470,10 @@ namespace CapaPresentacion
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+
             //Primero determino que la caja de texto no esté vacía:
             //Equals: para comparar un texto:
-            if (!this.txtIdcliente.Text.Equals(""))
+            if (!this.txtIdtrabajador.Text.Equals(""))
             {
                 //Si no está vacía activamos el botón Editar:
                 this.IsEditar = true;
@@ -458,18 +487,6 @@ namespace CapaPresentacion
             {
                 this.MensajeError("Debe seleccionar primero el registro a Modificar");
             }
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            //"False" porque estamos cancelando todo
-            this.IsNuevo = false;
-            this.IsEditar = false;
-            this.Botones();
-            this.Habilitar(false);
-            this.Limpiar();
-            //Dejamos en blanco nuestra caja de texto "Idcliente"
-            this.txtIdcliente.Text = string.Empty;
         }
     }
 }
