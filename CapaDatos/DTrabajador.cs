@@ -514,16 +514,23 @@ namespace CapaDatos
                 SqlCon.ConnectionString = Conexion.Cn;
                 SqlCommand SqlCmd = new SqlCommand();
                 SqlCmd.Connection = SqlCon;
+                //Me comunico con el procesamiento almacenado: splogin de mi BD
                 SqlCmd.CommandText = "splogin";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
+                //Qué parámetros le vamos a enviar?
+                //El primero será el Usuario:
                 SqlParameter ParUsuario = new SqlParameter();
+                //Le decimos que se comunique con la variable @usuario de mi procedimiento almacenado
                 ParUsuario.ParameterName = "@usuario";
                 ParUsuario.SqlDbType = SqlDbType.VarChar;
+                //De qué tamaño será: de 20 caracteres
                 ParUsuario.Size = 20;
+                //Le digo de que en mi objeto trabajador, busque la variable en este caso: Usuario
                 ParUsuario.Value = Trabajador.Usuario;
                 SqlCmd.Parameters.Add(ParUsuario);
 
+                //SEGUNDO PARÁMETRO: Password
                 SqlParameter ParPassword = new SqlParameter();
                 ParPassword.ParameterName = "@password";
                 ParPassword.SqlDbType = SqlDbType.VarChar;

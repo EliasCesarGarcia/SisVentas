@@ -96,11 +96,16 @@ namespace CapaNegocio
             return Obj.BuscarNum_Documento(Obj);
         }
 
+        //Va a recibir 2 parámetros: usuario y password
         public static DataTable Login(string usuario, string password)
         {
             DTrabajador Obj = new DTrabajador();
+            //Le digo que a la variable Usuario le envíe lo que tengo en mi parámetro usuario
             Obj.Usuario = usuario;
+            //Le digo que a la variable Password le envíe lo que tengo en mi parámetro password
             Obj.Password = password;
+            //Con qué función va a trabajar? Login de la clase DTrabajador
+            //Esta función me está retornando un DataTable
             return Obj.Login(Obj);
         }
 
