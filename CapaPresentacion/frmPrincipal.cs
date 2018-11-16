@@ -14,6 +14,14 @@ namespace CapaPresentacion
     {
         private int childFormNumber = 0;
 
+        //Variables para poder almacenar el código del trabajado, su nombres, apellidos y acceso:
+        //Serán públicas para ser comunicados desde el formulario frmLogin. 
+        //La inicializamos vacías.
+        public string Idtrabajador = "";
+        public string Apellidos = "";
+        public string Nombre = "";
+        public string Acceso = "";
+
         public frmPrincipal()
         {
             InitializeComponent();
@@ -156,6 +164,72 @@ namespace CapaPresentacion
             frmTrabajador frm = new frmTrabajador();
             frm.MdiParent = this;
             frm.Show();
+        }
+
+        private void toolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            //LLamo a mi procedimiento GestionUsuario:
+            GestionUsuario();
+        }
+
+        //Este método va a controlar los accesos.
+        private void GestionUsuario()
+        {
+            //COntrolar los accesos
+            if (Acceso == "Administrador")
+            {
+                //Activo o desactivo los menús. Como es Administrador quedan todos activados.
+                this.MnuAlmacen.Enabled = true;
+                this.MnuCompras.Enabled = true;
+                this.MnuVentas.Enabled = true;
+                this.MnuMantenimiento.Enabled = true;
+                this.MnuConsultas.Enabled = true;
+                this.MnuHerramientas.Enabled = true;
+                this.TsCompras.Enabled = true;
+                this.TsVentas.Enabled = true;
+
+            }
+            else if (Acceso == "Vendedor")
+            {
+                this.MnuAlmacen.Enabled = false;
+                this.MnuCompras.Enabled = false;
+                this.MnuVentas.Enabled = true;
+                this.MnuMantenimiento.Enabled = false;
+                this.MnuConsultas.Enabled = true;
+                this.MnuHerramientas.Enabled = true;
+                this.TsCompras.Enabled = false;
+                this.TsVentas.Enabled = true;
+
+            }
+            else if (Acceso == "Almacenero")
+            {
+                this.MnuAlmacen.Enabled = true;
+                this.MnuCompras.Enabled = true;
+                this.MnuVentas.Enabled = false;
+                this.MnuMantenimiento.Enabled = false;
+                this.MnuConsultas.Enabled = true;
+                this.MnuHerramientas.Enabled = true;
+                this.TsCompras.Enabled = true;
+                this.TsVentas.Enabled = false;
+
+            }
+            else
+            {
+                this.MnuAlmacen.Enabled = false;
+                this.MnuCompras.Enabled = false;
+                this.MnuVentas.Enabled = false;
+                this.MnuMantenimiento.Enabled = false;
+                this.MnuConsultas.Enabled = false;
+                this.MnuHerramientas.Enabled = false;
+                this.TsCompras.Enabled = false;
+                this.TsVentas.Enabled = false;
+
+            }
         }
     }
 }

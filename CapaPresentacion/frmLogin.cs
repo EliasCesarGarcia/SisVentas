@@ -35,5 +35,38 @@ namespace CapaPresentacion
         {
             Application.Exit();
         }
+
+        private void BtnIngresar_Click(object sender, EventArgs e)
+        {
+            //Creamos un objeto del tipo DataTable y éste reciba el DataTable resultante de la...
+            //... clase NTrabajador del método Login.
+            //El método Login está esperando 2 parámetros.
+            DataTable Datos = CapaNegocio.NTrabajador.Login(this.TxtUsuario.Text, this.TxtPassword.Text);
+            //Evaluar si existe el Usuario ingresado en la caja de texto Usuario.
+            //Datos, que es del tipo DataTable. De sus filas (Rows), las cuento (Count)
+            if (Datos.Rows.Count == 0)
+            {
+                MessageBox.Show("NO Tiene Acceso al Sistema", "Sistema de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            //Si existe alguna fila, podré acceder al Sistema
+            else
+            {
+                //Creo un objeto que haga referencia al frmPrincipal
+                frmPrincipal frm = new frmPrincipal();
+                //Al acceder al sistema podré enviarle todos los datos:
+                //Será igual a qué? a mi DataTable que se llama Datos. Obtengo la fila 0, columna 0, y lo convierto a un string.
+                //Se lo paso a la variable pública Idtrabajador del frmPrincipal
+                frm.Idtrabajador = Datos.Rows[0][0].ToString();
+                frm.Apellidos = Datos.Rows[0][1].ToString();
+                frm.Nombre = Datos.Rows[0][2].ToString();
+                frm.Acceso = Datos.Rows[0][3].ToString();
+
+                //Le digo Show para que aparezca:
+                frm.Show();
+                //Para que se oculte después de acceder el frmLogin:
+                this.Hide();
+
+            }
+        }
     }
 }
